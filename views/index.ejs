@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="/styles/main.css" rel="stylesheet" />
+</head>
+
+<body>
+    <section id="background">
+        <div class="backgroundContainer">
+            <form action="/search" method="GET" id="searchContainer">
+                <input id="searchBar" name="search" placeholder="Search" />
+                <button type="submit">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                </button>
+            </form>
+            <p class="searchResult">No results found</p>
+            <div id="movieContainer">
+                <div class="movieImageContainer">
+                    <img class="movieImage" />
+                </div>
+                <div class="movieDetails">
+                    <h3 class="movieName">Movie</h3>
+                    <p class="movieDate">10 June, 2015</p>
+                    <p class="movielang">English</p>
+                    <div class="movieRating">
+                        <span class="material-symbols-outlined">
+                            star_rate
+                        </span>
+                    </div>
+                    <div class="movieGenreContainer">
+                        <div class="movieGenre"></div>
+                    </div>
+                    <p class="movieDescription">Lorum ipsum dolor kaste lapis Lorum ipsum dolor kaste lapisLorum ipsum
+                        dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor
+                        kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor kaste
+                        lapis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
