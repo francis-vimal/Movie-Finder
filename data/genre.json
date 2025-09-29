@@ -1,0 +1,22 @@
+[
+    { "id": 28, "emoji": "🔥", "name": "Action" },
+    { "id": 12, "emoji": "🗺️", "name": "Adventure" },
+    { "id": 16, "emoji": "🎨", "name": "Animation" },
+    { "id": 35, "emoji": "😂", "name": "Comedy" },
+    { "id": 80, "emoji": "🕵️", "name": "Crime" },
+    { "id": 99, "emoji": "🎥", "name": "Documentary" },
+    { "id": 18, "emoji": "🎭", "name": "Drama" },
+    { "id": 10751, "emoji": "👨‍👩‍👧", "name": "Family" },
+    { "id": 14, "emoji": "🪄", "name": "Fantasy" },
+    { "id": 36, "emoji": "📜", "name": "History" },
+    { "id": 27, "emoji": "👻", "name": "Horror" },
+    { "id": 10402, "emoji": "🎶", "name": "Music" },
+    { "id": 9648, "emoji": "❓", "name": "Mystery" },
+    { "id": 10749, "emoji": "❤️", "name": "Romance" },
+    { "id": 878, "emoji": "🚀", "name": "Science Fiction" },
+    { "id": 10770, "emoji": "📺", "name": "TV Movie" },
+    { "id": 53, "emoji": "🔪", "name": "Thriller" },
+    { "id": 10752, "emoji": "⚔️", "name": "War" },
+    { "id": 37, "emoji": "🤠", "name": "Western" }
+  ]
+  

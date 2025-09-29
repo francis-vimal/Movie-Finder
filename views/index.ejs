@@ -7,15 +7,15 @@
     <title>Movie Finder</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
     <link href="/styles/main.css" rel="stylesheet" />
 </head>
 
 <body>
-    <section id="background">
+    <section id="background"
+        style="--bg: <%= locals.movieData ? `url(https://image.tmdb.org/t/p/w1280${movieData.backdrop_path})` : 'none' %>;">
         <div class="backgroundContainer">
             <form action="/search" method="GET" id="searchContainer">
                 <input id="searchBar" name="search" placeholder="Search" />
@@ -27,27 +27,80 @@
             </form>
             <p class="searchResult">No results found</p>
             <div id="movieContainer">
-                <div class="movieImageContainer">
-                    <img class="movieImage" />
-                </div>
-                <div class="movieDetails">
-                    <h3 class="movieName">Movie</h3>
-                    <p class="movieDate">10 June, 2015</p>
-                    <p class="movielang">English</p>
-                    <div class="movieRating">
-                        <span class="material-symbols-outlined">
-                            star_rate
-                        </span>
+                <% if (locals.movieData) { %>
+                    <div class="movieImageContainer">
+                        <img src="https://image.tmdb.org/t/p/w500/<%= movieData.poster_path %>" class="movieImage"
+                            alt="movie_image" />
                     </div>
-                    <div class="movieGenreContainer">
-                        <div class="movieGenre"></div>
+                    <div class="movieDetails">
+                        <h3 class="movieName">
+                            <%= movieData.title %>
+                        </h3>
+                        <p class="movieDate">
+                            <%= movieData.release_date %>
+                        </p>
+                        <p class="movielang">
+                            <%= movieData.original_language %>
+                        </p>
+                        <div class="movieRating">
+                            <% 
+                            const rating = Math.round(movieData.vote_average); // round 7.9 → 8
+                            const fullStars = Math.floor(rating / 2);          // 8/2 = 4 full stars
+                            const halfStar = rating % 2 >= 1 ? 1 : 0;          // if odd, show half star
+                            const emptyStars = 5 - fullStars - halfStar;       // remaining empty
+                          %>
+                        
+                          <% for (let i = 0; i < fullStars; i++) { %>
+                            <span class="star material-symbols-outlined">star</span>
+                          <% } %>
+                        
+                          <% if (halfStar) { %>
+                            <span class="material-symbols-outlined">star_half</span>
+                          <% } %>
+                        
+                          <% for (let i = 0; i < emptyStars; i++) { %>
+                            <span class="material-symbols-outlined">star</span>
+                          <% } %>
+                        </div>
+                        <div class="movieGenreContainer">
+                            <% movieData.genre_ids.forEach(element => { %>
+                                <div class="movieGenre">
+                                    <span class="genreEmoji"><%= genreData.find(genre => genre.id === element).emoji %></span>
+                                    <span class="genreName"><%= genreData.find(genre => genre.id === element).name %></span>
+                                </div>
+                            <% }); %>
+                        </div>
+                        <p class="movieDescription">
+                            <%= movieData.overview %>
+                        </p>
                     </div>
-                    <p class="movieDescription">Lorum ipsum dolor kaste lapis Lorum ipsum dolor kaste lapisLorum ipsum
-                        dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor
-                        kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor kaste
-                        lapis</p>
-                </div>
+                    <% } else { %>
+                        <div class="movieImageContainer">
+                            <img class="movieImage" alt="movie_image" />
+                        </div>
+                        <div class="movieDetails">
+                            <h3 class="movieName">Movie</h3>
+                            <p class="movieDate">10 June, 2015</p>
+                            <p class="movielang">English</p>
+                            <div class="movieRating">
+                                <span class="material-symbols-outlined">
+                                    star_rate
+                                </span>
+                            </div>
+                            <div class="movieGenreContainer">
+                                <div class="movieGenre"></div>
+                            </div>
+                            <p class="movieDescription">Lorum ipsum dolor kaste lapis Lorum ipsum dolor kaste lapisLorum
+                                ipsum
+                                dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum
+                                dolor
+                                kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor
+                                kaste
+                                lapis</p>
+                        </div>
+                        <% } %>
             </div>
+        </div>
         </div>
     </section>
 </body>
