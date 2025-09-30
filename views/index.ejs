@@ -14,9 +14,8 @@
 </head>
 
 <body>
-    <section id="background"
-        style="--bg: <%= locals.movieData ? `url(https://image.tmdb.org/t/p/w1280${movieData.backdrop_path})` : 'none' %>;">
-        <div class="backgroundContainer">
+    <div id="wholeContainer">
+        <div class="searchParent">
             <form action="/search" method="GET" id="searchContainer">
                 <input id="searchBar" name="search" placeholder="Search" />
                 <button type="submit">
@@ -25,84 +24,102 @@
                     </span>
                 </button>
             </form>
-            <p class="searchResult">No results found</p>
-            <div id="movieContainer">
-                <% if (locals.movieData) { %>
-                    <div class="movieImageContainer">
-                        <img src="https://image.tmdb.org/t/p/w500/<%= movieData.poster_path %>" class="movieImage"
-                            alt="movie_image" />
-                    </div>
-                    <div class="movieDetails">
-                        <h3 class="movieName">
-                            <%= movieData.title %>
-                        </h3>
-                        <p class="movieDate">
-                            <%= movieData.release_date %>
-                        </p>
-                        <p class="movielang">
-                            <%= movieData.original_language %>
-                        </p>
-                        <div class="movieRating">
-                            <% 
-                            const rating = Math.round(movieData.vote_average); // round 7.9 → 8
-                            const fullStars = Math.floor(rating / 2);          // 8/2 = 4 full stars
-                            const halfStar = rating % 2 >= 1 ? 1 : 0;          // if odd, show half star
-                            const emptyStars = 5 - fullStars - halfStar;       // remaining empty
-                          %>
-                        
-                          <% for (let i = 0; i < fullStars; i++) { %>
-                            <span class="star material-symbols-outlined">star</span>
-                          <% } %>
-                        
-                          <% if (halfStar) { %>
-                            <span class="material-symbols-outlined">star_half</span>
-                          <% } %>
-                        
-                          <% for (let i = 0; i < emptyStars; i++) { %>
-                            <span class="material-symbols-outlined">star</span>
-                          <% } %>
-                        </div>
-                        <div class="movieGenreContainer">
-                            <% movieData.genre_ids.forEach(element => { %>
-                                <div class="movieGenre">
-                                    <span class="genreEmoji"><%= genreData.find(genre => genre.id === element).emoji %></span>
-                                    <span class="genreName"><%= genreData.find(genre => genre.id === element).name %></span>
-                                </div>
-                            <% }); %>
-                        </div>
-                        <p class="movieDescription">
-                            <%= movieData.overview %>
-                        </p>
-                    </div>
+            <p class="searchResult"><%= movieData.total > 10 ? "Search results for " + movieData.query : "No results found" %></p>
+        </div>
+        <div id="navContainer">
+            <% if (locals.movieData && movieData.movies.length) { %>
+                <% movieData.movies.forEach((movie, index) => {  %>
+                    <% if (index === 0) { %>
+                        <div class="navIndex active" onclick="onNavClick(<%= index %>, this)" ><%= index + 1 %></div>
                     <% } else { %>
-                        <div class="movieImageContainer">
-                            <img class="movieImage" alt="movie_image" />
-                        </div>
-                        <div class="movieDetails">
-                            <h3 class="movieName">Movie</h3>
-                            <p class="movieDate">10 June, 2015</p>
-                            <p class="movielang">English</p>
-                            <div class="movieRating">
-                                <span class="material-symbols-outlined">
-                                    star_rate
-                                </span>
-                            </div>
-                            <div class="movieGenreContainer">
-                                <div class="movieGenre"></div>
-                            </div>
-                            <p class="movieDescription">Lorum ipsum dolor kaste lapis Lorum ipsum dolor kaste lapisLorum
-                                ipsum
-                                dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum
-                                dolor
-                                kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor
-                                kaste
-                                lapis</p>
-                        </div>
-                        <% } %>
-            </div>
+                        <div onclick="onNavClick(<%= index %>, this)" class="navIndex"><%= index + 1 %></div>
+                    <% } %>
+            <% })}%>
         </div>
-        </div>
-    </section>
+        <% if (locals.movieData && movieData.movies.length) { %>
+            <% movieData.movies.forEach((movie, index) => {  %>
+            <section id="background" class="<%= index === 0 ? 'active' : '' %>"
+                style="--bg: <%= locals.movieData ? `url(https://image.tmdb.org/t/p/w1280${movie.backdrop_path})` : 'none' %>;">
+                <div class="backgroundContainer">
+                    <div id="movieContainer">
+                        <% if (locals.movieData) { %>
+                            <div class="movieImageContainer">
+                                <img src="https://image.tmdb.org/t/p/w500/<%= movie.poster_path %>" class="movieImage"
+                                    alt="movie_image" />
+                            </div>
+                            <div class="movieDetails">
+                                <h3 class="movieName">
+                                    <%= movie.title %>
+                                </h3>
+                                <p class="movieDate">
+                                    <%= movie.release_date %>
+                                </p>
+                                <p class="movielang">
+                                    <%= movie.language_display %>
+                                </p>
+                                <div class="movieRating">
+                                    <% 
+                                    const rating = Math.round(movie.vote_average); // round 7.9 → 8
+                                    const fullStars = Math.floor(rating / 2);          // 8/2 = 4 full stars
+                                    const halfStar = rating % 2 >= 1 ? 1 : 0;          // if odd, show half star
+                                    const emptyStars = 5 - fullStars - halfStar;       // remaining empty
+                                  %>
+                                
+                                  <% for (let i = 0; i < fullStars; i++) { %>
+                                    <span class="star material-symbols-outlined">star</span>
+                                  <% } %>
+                                
+                                  <% if (halfStar) { %>
+                                    <span class="material-symbols-outlined">star_half</span>
+                                  <% } %>
+                                
+                                  <% for (let i = 0; i < emptyStars; i++) { %>
+                                    <span class="material-symbols-outlined">star</span>
+                                  <% } %>
+                                </div>
+                                <div class="movieGenreContainer">
+                                    <% movie.genre_ids.forEach(element => { %>
+                                        <div class="movieGenre">
+                                            <span class="genreEmoji"><%= genreData.find(genre => genre.id === element).emoji %></span>
+                                            <span class="genreName"><%= genreData.find(genre => genre.id === element).name %></span>
+                                        </div>
+                                    <% }); %>
+                                </div>
+                                <p class="movieDescription">
+                                    <%= movie.overview %>
+                                </p>
+                            </div>
+                            <% } else { %>
+                                <div class="movieImageContainer">
+                                    <img class="movieImage" alt="movie_image" />
+                                </div>
+                                <div class="movieDetails">
+                                    <h3 class="movieName">Movie</h3>
+                                    <p class="movieDate">10 June, 2015</p>
+                                    <p class="movielang">English</p>
+                                    <div class="movieRating">
+                                        <span class="material-symbols-outlined">
+                                            star_rate
+                                        </span>
+                                    </div>
+                                    <div class="movieGenreContainer">
+                                        <div class="movieGenre"></div>
+                                    </div>
+                                    <p class="movieDescription">Lorum ipsum dolor kaste lapis Lorum ipsum dolor kaste lapisLorum
+                                        ipsum
+                                        dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum
+                                        dolor
+                                        kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor kaste lapisLorum ipsum dolor
+                                        kaste
+                                        lapis</p>
+                                </div>
+                                <% } %>
+                    </div>
+                </div>
+            </section>
+        <% }) %>
+        <% } %>
+    </div>
+    <script src="/js/script.js"></script>
 </body>
-
 </html>

@@ -16,9 +16,18 @@ button {
     place-items: center;
 }
 
+#wholeContainer {
+    height: 100vh;
+    overflow: hidden;
+}
+
+#background.active {
+    height: 100vh;
+}
+
 #background {
     width: 100%;
-    height: 100vh;  
+    height: 0vh;  
     background-image: 
         linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0) 30%), 
         linear-gradient(to left, rgba(0,0,0,0.5), rgba(0,0,0,0) 30%), 
@@ -28,10 +37,21 @@ button {
     background-position: center;
     background-repeat: no-repeat;
     background-color: black;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    transition: height .5s ease-in-out;
 }
 
 .backgroundContainer {
     padding-top: 50px;
+}
+
+.searchParent {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 #searchContainer {
@@ -55,9 +75,9 @@ button {
 }
 
 .searchResult {
+    
     font-size: 16px;
-    color: #FFFFFF;
-    opacity: 0.5;
+    color: rgba(255, 255, 255, 0.5);
     text-align: center;
     margin: 30px 0;
 }
@@ -67,7 +87,8 @@ button {
     flex-direction: row;
     justify-content: center;
     gap: 80px;
-
+    margin: 0 30px;
+    
     .movieImageContainer {
         display: flex;
         justify-content: end;
@@ -164,4 +185,30 @@ button {
         font-style: italic;
         line-height: 20px;
     }
+}
+
+#navContainer {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 40px;
+    color: white;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.navIndex {
+    cursor: pointer;
+    padding: 10px;
+    display: grid;
+    border-radius: 5px;
+    place-items: center;
+    background-color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+.navIndex.active {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
 }

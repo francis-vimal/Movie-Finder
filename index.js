@@ -13,10 +13,12 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    mockData.release_date = dateConversion(mockData.release_date);
+    // mockData.release_date = dateConversion(mockData.release_date);
     const displayNames = new Intl.DisplayNames(['en'], { type: 'language' });
-    mockData.original_language = displayNames.of(mockData.original_language) + ' (' + mockData.original_language + ')';
-    // console.log(displayNames.of(mockData.original_language)); 
+    mockData.movies.forEach((movie) => {
+        movie.release_date = dateConversion(movie.release_date);
+        movie.language_display = displayNames.of(movie.original_language) + ' (' + movie.original_language + ')';
+    })
     res.render('index.ejs', { movieData: mockData, genreData: genreData});
 })
 
@@ -32,6 +34,11 @@ app.get('/search', async (req, res) => {
                 "X-Rapidapi-Key": API_KEY,
                 'X-RapidAPI-Host': 'ai-movie-recommender.p.rapidapi.com'
             }
+        })
+        const displayNames = new Intl.DisplayNames(['en'], { type: 'language' });
+        response.data.movies.forEach((movie) => {
+            movie.release_date = dateConversion(movie.release_date);
+            movie.language_display = displayNames.of(movie.original_language) + ' (' + movie.original_language + ')';
         })
         console.log(response.data);
         res.render('index.ejs', { movieData: response.data, genreData: genreData});
