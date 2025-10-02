@@ -1,13 +1,15 @@
 import express from 'express'
 import axios from 'axios'
 import bodyParser from "body-parser";
+import dotenv from "dotenv";
 import mockData from "./data/static.json" assert { type: "json" };
 import genreData from "./data/genre.json" assert { type: "json" };
 
 const app = express();
-const port = 3000;
+dotenv.config();
+const port = process.env.PORT || 3000;;
 const API_URL = "https://ai-movie-recommender.p.rapidapi.com/api"
-const API_KEY = "4d93b2bca3msha1a10ff263c27a9p1c7dedjsn0aff4fb42b06"
+const API_KEY = process.env.API_KEY;
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
