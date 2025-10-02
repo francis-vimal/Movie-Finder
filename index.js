@@ -2,8 +2,9 @@ import express from 'express'
 import axios from 'axios'
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import mockData from "./data/static.json" assert { type: "json" };
-import genreData from "./data/genre.json" assert { type: "json" };
+import fs from "fs";
+const mockData = JSON.parse(fs.readFileSync("./data/static.json", "utf-8"));
+const genreData = JSON.parse(fs.readFileSync("./data/genre.json", "utf-8"));
 
 const app = express();
 dotenv.config();
